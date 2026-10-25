@@ -17,7 +17,9 @@ Shader "Skybox/Night Sky"
 
         [Header(Light Pollution)]
         _LightPollution ("Light Pollution", Range(0, 1)) = 0
-        _PollutionColor ("Pollution Glow Color", Color) = (1, 0.55, 0.25, 1)
+        _PollutionColor ("Pollution Glow Color", Color) = (1, 0.75, 0.55, 1)
+        _GlowStrength ("Glow Strength", Range(0, 1)) = 0.15
+        _StarFade ("Star Fade", Range(0, 1)) = 0.75
     }
 
     SubShader
@@ -46,6 +48,8 @@ Shader "Skybox/Night Sky"
                 float _TwinkleAmount;
                 float _LightPollution;
                 float4 _PollutionColor;
+                float _GlowStrength;
+                float _StarFade;
             CBUFFER_END
 
             struct Attributes
@@ -91,7 +95,7 @@ Shader "Skybox/Night Sky"
                     return 0;
                 float4 rnd2 = Hash43(float3(cell, seed + 500));
 
-                float brightness = max(maxBrightness * rnd.z * rnd.z * rnd.z - _LightPollution, 0);
+                float brightness = max(maxBrightness * rnd.z * rnd.z * rnd.z - _LightPollution * _StarFade, 0);
                 float twinkle = 1 - _TwinkleAmount * (0.5 + 0.5 * sin(_Time.y * _TwinkleSpeed * (0.5 + rnd2.x) + rnd2.y * TWO_PI));
                 float pixel = pixelAngle * cells / (0.5 * PI);
                 float radius = min(pixel * (1 + brightness), 0.2);
@@ -122,7 +126,9 @@ Shader "Skybox/Night Sky"
                 float3 sky = lerp(_HorizonColor.rgb, _ZenithColor.rgb, pow(saturate(height), _GradientExponent));
 
                 float glow = exp(-saturate(height) * 5) * 0.5 + 0.08;
-                sky += _PollutionColor.rgb * _LightPollution * glow;
+                float glowLuminance = dot(_PollutionColor.rgb, float3(0.2126, 0.7152, 0.0722));
+                float3 glowColor = lerp(_PollutionColor.rgb, glowLuminance.xxx, saturate(height));
+                sky += glowColor * _LightPollution * _GlowStrength * glow;
 
                 float pixelAngle = max(length(ddx(dir)), length(ddy(dir)));
                 float3 stars = StarLayer(dir, 200, 0.2, 0.4, pixelAngle)

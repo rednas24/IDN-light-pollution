@@ -25,17 +25,19 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _GlowStrength: 0.15
     - _GradientExponent: 0.5
     - _LightPollution: 0
     - _StarBrightness: 1.5
     - _StarColorVariation: 0.5
     - _StarDensity: 1
+    - _StarFade: 0.75
     - _TwinkleAmount: 0.3
     - _TwinkleSpeed: 3
     m_Colors:
     - _GroundColor: {r: 0.02, g: 0.02, b: 0.025, a: 1}
     - _HorizonColor: {r: 0.06, g: 0.08, b: 0.14, a: 1}
-    - _PollutionColor: {r: 1, g: 0.55, b: 0.25, a: 1}
+    - _PollutionColor: {r: 1, g: 0.75, b: 0.55, a: 1}
     - _ZenithColor: {r: 0.01, g: 0.015, b: 0.04, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
