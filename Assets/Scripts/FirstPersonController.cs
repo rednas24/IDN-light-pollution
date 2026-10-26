@@ -20,6 +20,8 @@ public class FirstPersonController : MonoBehaviour
     private float pitch;
     private float verticalVelocity;
 
+    public bool CanLook { get; set; } = true;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -61,7 +63,8 @@ public class FirstPersonController : MonoBehaviour
 
     private void Update()
     {
-        Look();
+        if (CanLook)
+            Look();
         Move();
     }
 

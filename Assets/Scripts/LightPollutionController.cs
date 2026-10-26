@@ -5,7 +5,7 @@ public class LightPollutionController : MonoBehaviour
 {
     private static readonly int PollutionId = Shader.PropertyToID("_LightPollution");
 
-    private Transform lightSources;
+    [SerializeField] private Transform lightSources;
     private float fullPollutionIntensity = 1500f;
     private AnimationCurve pollutionCurve = new AnimationCurve(
         new Keyframe(0f, 0f, 0f, 0f),
