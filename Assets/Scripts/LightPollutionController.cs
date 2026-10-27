@@ -6,7 +6,7 @@ public class LightPollutionController : MonoBehaviour
     private static readonly int PollutionId = Shader.PropertyToID("_LightPollution");
 
     [SerializeField] private Transform lightSources;
-    private float fullPollutionIntensity = 1500f;
+    private float fullPollutionPerLight = 250f;
     private AnimationCurve pollutionCurve = new AnimationCurve(
         new Keyframe(0f, 0f, 0f, 0f),
         new Keyframe(1f, 1f, 2f, 2f)
@@ -39,14 +39,17 @@ public class LightPollutionController : MonoBehaviour
 
     private float MeasurePollution()
     {
-        float intensity = 0f;
         lightSources.GetComponentsInChildren(lights);
+        if (lights.Count == 0)
+            return 0f;
+
+        float intensity = 0f;
         foreach (Light light in lights)
         {
             if (light.enabled)
                 intensity += light.intensity;
         }
-        float amount = Mathf.Clamp01(intensity / fullPollutionIntensity);
+        float amount = Mathf.Clamp01(intensity / lights.Count / fullPollutionPerLight);
         return pollutionCurve.Evaluate(amount);
     }
 }
