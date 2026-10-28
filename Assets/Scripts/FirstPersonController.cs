@@ -21,6 +21,7 @@ public class FirstPersonController : MonoBehaviour
     private float verticalVelocity;
 
     public bool CanLook { get; set; } = true;
+    public bool CanMove { get; set; } = true;
 
     private void Awake()
     {
@@ -78,7 +79,7 @@ public class FirstPersonController : MonoBehaviour
 
     private void Move()
     {
-        Vector2 input = moveAction.ReadValue<Vector2>();
+        Vector2 input = CanMove ? moveAction.ReadValue<Vector2>() : Vector2.zero;
         Vector3 direction = transform.right * input.x + transform.forward * input.y;
         if (controller.isGrounded && verticalVelocity < 0f)
             verticalVelocity = -2f;

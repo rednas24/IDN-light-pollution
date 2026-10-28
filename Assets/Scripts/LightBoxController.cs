@@ -78,7 +78,8 @@ public class LightBoxController : MonoBehaviour
 
     private void Update()
     {
-        aiming = Physics.Raycast(view.position, view.forward, out RaycastHit hit, interactDistance)
+        aiming = Physics.Raycast(view.position, view.forward, out RaycastHit hit, interactDistance,
+                Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)
             && hit.collider.transform.IsChildOf(transform);
 
         if (aiming && grabAction.WasPressedThisFrame())
