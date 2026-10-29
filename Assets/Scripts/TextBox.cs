@@ -25,6 +25,8 @@ public class TextBox : MonoBehaviour
     private string page;
     private float typed;
 
+    public static bool IsOpen => instance != null && (instance.page != null || instance.texts.Count > 0);
+
     public static void Show(params string[] texts)
     {
         if (instance == null)

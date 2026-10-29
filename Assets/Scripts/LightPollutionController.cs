@@ -20,6 +20,8 @@ public class LightPollutionController : MonoBehaviour
     private float pollution;
     private float velocity;
 
+    public float Pollution => pollution;
+
     private void Awake()
     {
         sky = new Material(RenderSettings.skybox);

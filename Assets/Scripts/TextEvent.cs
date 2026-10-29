@@ -5,7 +5,9 @@ public class TextEvent : MonoBehaviour
 {
     [SerializeField, TextArea(2, 4)] private string[] pages;
     [SerializeField] private bool onlyOnce = true;
+    [SerializeField, Range(0f, 1f)] private float minSkyBrightness;
 
+    private LightPollutionController sky;
     private bool triggered;
 
     private void Reset()
@@ -13,9 +15,16 @@ public class TextEvent : MonoBehaviour
         GetComponent<BoxCollider>().isTrigger = true;
     }
 
+    private void Awake()
+    {
+        sky = FindAnyObjectByType<LightPollutionController>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if ((onlyOnce && triggered) || !other.TryGetComponent(out FirstPersonController _))
+            return;
+        if (sky != null && sky.Pollution < minSkyBrightness)
             return;
 
         triggered = true;
