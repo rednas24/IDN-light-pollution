@@ -9,6 +9,7 @@ public class LightButton : MonoBehaviour
     [SerializeField] private Transform button;
     [SerializeField, TextArea(2, 4)] private string[] pages;
     [SerializeField] private bool onlyOnce = true;
+    [SerializeField] private AudioClip pressSound;
 
     private float interactDistance = 2.5f;
     private Color glowColor = new Color(1f, 0.62f, 0.35f);
@@ -20,6 +21,7 @@ public class LightButton : MonoBehaviour
     private Transform view;
     private Renderer buttonRenderer;
     private MaterialPropertyBlock glow;
+    private AudioSource audioSource;
     private InputAction pressAction;
     private GUIStyle promptStyle;
     private Vector3 restPosition;
@@ -38,6 +40,8 @@ public class LightButton : MonoBehaviour
         buttonRenderer = button.GetComponent<Renderer>();
         restPosition = button.localPosition;
         glow = new MaterialPropertyBlock();
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
         lightsOn = windowLights.gameObject.activeSelf;
         Apply();
     }
@@ -54,6 +58,8 @@ public class LightButton : MonoBehaviour
             lightsOn = !lightsOn;
             pressTimer = pressTime;
             Apply();
+            if (pressSound != null)
+                audioSource.PlayOneShot(pressSound);
 
             if (!lightsOn && !(onlyOnce && told))
             {

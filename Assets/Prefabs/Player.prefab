@@ -267,3 +267,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4af9b46d32044f68e0c8374fa3ccdc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirstPersonController
+  footstepSound: {fileID: 8300000, guid: e876133a6077f134eb9d652838cc50bb, type: 3}

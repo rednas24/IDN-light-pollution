@@ -27,6 +27,7 @@ public class LightBoxController : MonoBehaviour
     [SerializeField, TextArea(2, 4)] private string[] pages;
     [SerializeField, TextArea(2, 4)] private string[] onPages;
     [SerializeField] private bool onlyOnce = true;
+    [SerializeField] private AudioClip switchSound;
 
     private readonly LightSetting[] settings =
     {
@@ -42,6 +43,7 @@ public class LightBoxController : MonoBehaviour
     private readonly List<Light> lights = new List<Light>();
     private readonly List<(Renderer, int)> lamps = new List<(Renderer, int)>();
     private MaterialPropertyBlock glow;
+    private AudioSource audioSource;
     private FirstPersonController player;
     private Transform view;
     private Renderer handleRenderer;
@@ -82,6 +84,8 @@ public class LightBoxController : MonoBehaviour
         }
 
         glow = new MaterialPropertyBlock();
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
         Apply();
     }
 
@@ -174,8 +178,11 @@ public class LightBoxController : MonoBehaviour
     {
         if (mode == Mode.Switch)
         {
+            bool on = level > 0.5f;
+            if (dragging && switchSound != null && lights.Count > 0 && lights[0].enabled != on)
+                audioSource.PlayOneShot(switchSound);
             foreach (Light light in lights)
-                light.enabled = level > 0.5f;
+                light.enabled = on;
         }
         else
         {

@@ -24,6 +24,7 @@ public class TextBox : MonoBehaviour
     private GUIStyle arrowStyle;
     private string page;
     private float typed;
+    private bool couldMove = true;
 
     public static bool IsOpen => instance != null && (instance.page != null || instance.texts.Count > 0);
 
@@ -32,6 +33,7 @@ public class TextBox : MonoBehaviour
         if (instance == null)
             instance = new GameObject(nameof(TextBox)).AddComponent<TextBox>();
 
+        bool wasOpen = IsOpen;
         foreach (string text in texts)
         {
             if (!string.IsNullOrWhiteSpace(text))
@@ -39,7 +41,11 @@ public class TextBox : MonoBehaviour
         }
 
         if (instance.texts.Count > 0 && instance.player != null)
+        {
+            if (!wasOpen)
+                instance.couldMove = instance.player.CanMove;
             instance.player.CanMove = false;
+        }
     }
 
     private void Awake()
@@ -119,7 +125,7 @@ public class TextBox : MonoBehaviour
         typed = 0f;
         page = pages.Count > 0 ? pages.Dequeue() : null;
         if (page == null && texts.Count == 0 && player != null)
-            player.CanMove = true;
+            player.CanMove = couldMove;
     }
 
     private void Paginate(string text, float width)

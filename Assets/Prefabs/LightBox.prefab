@@ -341,3 +341,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LightBoxController
   streetLights: {fileID: 0}
   handle: {fileID: 2606889261419426375}
+  switchSound: {fileID: 8300000, guid: dd37aa3a35c16fb4a8f6df9794ac721b, type: 3}

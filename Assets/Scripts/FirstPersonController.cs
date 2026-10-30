@@ -8,20 +8,36 @@ public class FirstPersonController : MonoBehaviour
     private Transform cameraTransform;
 
     [Header("Movement")]
-    private float moveSpeed = 4f;
+    public float moveSpeed = 4f;
 
     [Header("Look")]
-    private float mouseSensitivity = 0.1f;
+    public float mouseSensitivity = 0.1f;
     private float maxLookAngle = 90f;
 
+    [Header("Footsteps")]
+    [SerializeField] private AudioClip footstepSound;
+    private float stepDistance = 1.2f;
+
     private CharacterController controller;
+    private AudioSource footsteps;
     private InputAction moveAction;
     private InputAction lookAction;
     private float pitch;
     private float verticalVelocity;
+    private float stepProgress;
 
     public bool CanLook { get; set; } = true;
     public bool CanMove { get; set; } = true;
+
+    public float Pitch
+    {
+        get => pitch;
+        set
+        {
+            pitch = Mathf.Clamp(value, -maxLookAngle, maxLookAngle);
+            cameraTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+        }
+    }
 
     private void Awake()
     {
@@ -48,6 +64,9 @@ public class FirstPersonController : MonoBehaviour
             "Player/Look",
             throwIfNotFound: true
         );
+
+        footsteps = gameObject.AddComponent<AudioSource>();
+        footsteps.playOnAwake = false;
     }
 
     private void OnEnable()
@@ -73,8 +92,7 @@ public class FirstPersonController : MonoBehaviour
     {
         Vector2 delta = lookAction.ReadValue<Vector2>() * mouseSensitivity;
         transform.Rotate(0f, delta.x, 0f);
-        pitch = Mathf.Clamp(pitch - delta.y, -maxLookAngle, maxLookAngle);
-        cameraTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+        Pitch = pitch - delta.y;
     }
 
     private void Move()
@@ -87,5 +105,27 @@ public class FirstPersonController : MonoBehaviour
 
         Vector3 velocity = direction * moveSpeed + Vector3.up * verticalVelocity;
         controller.Move(velocity * Time.deltaTime);
+        Footsteps();
+    }
+
+    private void Footsteps()
+    {
+        Vector3 walked = controller.velocity;
+        walked.y = 0f;
+        if (walked.sqrMagnitude < 0.01f)
+        {
+            stepProgress = stepDistance;
+            return;
+        }
+        if (!controller.isGrounded)
+            return;
+
+        stepProgress += walked.magnitude * Time.deltaTime;
+        if (stepProgress < stepDistance || footstepSound == null)
+            return;
+
+        stepProgress = 0f;
+        footsteps.pitch = Random.Range(0.9f, 1.1f);
+        footsteps.PlayOneShot(footstepSound, Random.Range(0.8f, 1f));
     }
 }
