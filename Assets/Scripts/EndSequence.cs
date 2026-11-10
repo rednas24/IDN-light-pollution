@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class EndSequence : MonoBehaviour
 {
@@ -43,6 +44,8 @@ public class EndSequence : MonoBehaviour
 
         yield return new WaitForSeconds(textDelay);
         TextBox.Show(pages);
+        yield return new WaitWhile(() => TextBox.IsOpen);
+        SceneManager.LoadScene("MainMenu1");
     }
 
     private void OnGUI()

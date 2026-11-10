@@ -12,7 +12,6 @@ public class TextBox : MonoBehaviour
     private Color borderColor = new Color(0.18f, 0.21f, 0.29f);
     private Color frameColor = new Color(0.52f, 0.64f, 0.78f);
     private Color textColor = new Color(0.25f, 0.25f, 0.27f);
-    private Color shadowColor = new Color(0.8f, 0.8f, 0.76f);
     private Color arrowColor = new Color(0.85f, 0.27f, 0.22f);
 
     private readonly Queue<string> texts = new Queue<string>();
@@ -104,9 +103,6 @@ public class TextBox : MonoBehaviour
         DrawPanel(new Rect(box.x + inset, box.y + inset, box.width - inset * 2f, box.height - inset * 2f), frameColor, unit * 0.3f, unit * 0.8f);
 
         string shown = page.Substring(0, Mathf.Min((int)typed, page.Length));
-        float shadow = unit * 0.3f;
-        textStyle.normal.textColor = shadowColor;
-        GUI.Label(new Rect(area.x + shadow, area.y + shadow, area.width, area.height), shown, textStyle);
         textStyle.normal.textColor = textColor;
         GUI.Label(area, shown, textStyle);
 
