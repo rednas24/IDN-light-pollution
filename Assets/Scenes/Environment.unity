@@ -4103,6 +4103,9 @@ MonoBehaviour:
   - Why are all these lights on? Nobody's even here.
   onlyOnce: 1
   minSkyBrightness: 0
+  lookUp: 0
+  sound: {fileID: 0}
+  ending: {fileID: 0}
 --- !u!65 &206684901
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18978,6 +18981,9 @@ MonoBehaviour:
     lights still on?"
   onlyOnce: 1
   minSkyBrightness: 0
+  lookUp: 0
+  sound: {fileID: 0}
+  ending: {fileID: 0}
 --- !u!65 &851051036
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35662,6 +35668,9 @@ MonoBehaviour:
   - "These street lights are so bright. Maybe they're hiding the stars too\u2026\n"
   onlyOnce: 1
   minSkyBrightness: 0
+  lookUp: 0
+  sound: {fileID: 0}
+  ending: {fileID: 0}
 --- !u!65 &1484177353
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36832,6 +36841,9 @@ MonoBehaviour:
     true?
   onlyOnce: 1
   minSkyBrightness: 0
+  lookUp: 0
+  sound: {fileID: 0}
+  ending: {fileID: 0}
 --- !u!4 &1535668061 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8928298322382841241, guid: a6204662827bd7141a0c02bdaa04e671, type: 3}
@@ -40298,6 +40310,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1069334482}
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
+--- !u!1 &1701024913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1701024915}
+  - component: {fileID: 1701024914}
+  m_Layer: 0
+  m_Name: EndSequence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1701024914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701024913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b8788fbddc42a47b89a942ceda8306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndSequence
+  pages:
+  - Do you leave unnecessary lights on?
+--- !u!4 &1701024915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701024913}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -296.24863, y: -23.83642, z: 47.09534}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1701054111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42501,6 +42559,7 @@ MonoBehaviour:
   minSkyBrightness: 0.4
   lookUp: 1
   sound: {fileID: 8300000, guid: 1e8a9bd5a5a48de46b382d441a0ea0ab, type: 3}
+  ending: {fileID: 1701024914}
 --- !u!1001 &1779620551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49516,3 +49575,4 @@ SceneRoots:
   - {fileID: 1037040609}
   - {fileID: 350212968}
   - {fileID: 692841348}
+  - {fileID: 1701024915}

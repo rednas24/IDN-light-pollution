@@ -9,6 +9,7 @@ public class TextEvent : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float minSkyBrightness;
     [SerializeField] private bool lookUp;
     [SerializeField] private AudioClip sound;
+    [SerializeField] private EndSequence ending;
 
     private float lookUpPitch = -55f;
     private float lookUpTime = 6f;
@@ -64,6 +65,13 @@ public class TextEvent : MonoBehaviour
 
         player.CanLook = true;
         TextBox.Show(pages);
+
+        if (ending != null)
+        {
+            yield return new WaitWhile(() => TextBox.IsOpen);
+            ending.Begin();
+        }
+        
     }
 
     private void OnDrawGizmos()
